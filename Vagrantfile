@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "VM-Arroyito" do |vm|
     # Configuración de la VM
+    vm.vm.hostname = "VM-Arroyito"
   end
 
   config.vm.provision "shell", inline: <<-SHELL
