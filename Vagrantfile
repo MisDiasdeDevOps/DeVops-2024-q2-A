@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/debian12"
+  config.vm.box = "debian/bookworm64"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "20000"  # 20 GBs de RAM
     vb.cpus = 8
