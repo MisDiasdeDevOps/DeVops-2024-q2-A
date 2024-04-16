@@ -3,7 +3,6 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "20000"  # 20 GBs de RAM
     vb.cpus = 8
-    vb.name = "VM-Arroyito"
   end
 
   config.vm.define "VM-Arroyito" do |vm|
@@ -43,3 +42,4 @@ Vagrant.configure("2") do |config|
     sudo apt-get autoremove -y
     sudo apt-get clean
   SHELL
+end
