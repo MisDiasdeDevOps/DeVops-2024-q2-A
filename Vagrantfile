@@ -18,7 +18,8 @@ Vagrant.configure("2") do |config|
     vm.vm.provision "shell", inline: <<-SHELL
       export DEBIAN_FRONTEND=noninteractive
       export DEBIAN_PRIORITY=critical
-    
+      echo "No zstd using. Using gzip"
+
       # Actualizar el sistema
       sudo apt-get update
       sudo apt-get upgrade -y
