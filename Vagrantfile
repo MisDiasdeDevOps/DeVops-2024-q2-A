@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
       # Instalar paquetes necesarios para las Guest Additions
       sudo apt-get install -y build-essential dkms linux-headers-$(uname -r)
 
-      # Descargar la versión específica de VirtualBox Guest Additions 6.0
+      # Descargar la versión específica de VirtualBox Guest Additions 6.0.0
       wget https://download.virtualbox.org/virtualbox/6.0.0/VBoxGuestAdditions_6.0.0.iso -O /tmp/VBoxGuestAdditions.iso
 
       # Montar el ISO de las Guest Additions
