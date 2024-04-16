@@ -1,10 +1,13 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/bookworm64"
+
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "20000"  # 20 GBs de RAM
     vb.cpus = 8
-    config.vm.define "VM-Arroyito" do |vm|
+  end
 
+  config.vm.define "VM-Arroyito" do |vm|
+    # Configuración de la VM
   end
 
   config.vm.provision "shell", inline: <<-SHELL
