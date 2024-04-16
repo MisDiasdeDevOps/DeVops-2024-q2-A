@@ -3,10 +3,8 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "20000"  # 20 GBs de RAM
     vb.cpus = 8
-  end
+    config.vm.define "VM-Arroyito" do |vm|
 
-  config.vm.define "VM-Arroyito" do |vm|
-    # Configuración de la VM
   end
 
   config.vm.provision "shell", inline: <<-SHELL
@@ -20,13 +18,9 @@ Vagrant.configure("2") do |config|
     # Instalar paquetes necesarios para las Guest Additions
     sudo apt-get install -y build-essential dkms linux-headers-$(uname -r)
 
-    # Copiar el archivo de las Guest Additions
-    sudo mkdir -p /tmp/guest_additions
-    sudo cp /vagrant_data/VBoxGuestAdditions.iso /tmp/guest_additions/
-
     # Montar el ISO de las Guest Additions
     sudo mkdir -p /mnt/vbox
-    sudo mount -o loop /tmp/guest_additions/VBoxGuestAdditions.iso /mnt/vbox
+    sudo mount -o loop /tmp/VBoxGuestAdditions.iso /mnt/vbox
 
     # Instalar las Guest Additions
     sudo sh /mnt/vbox/VBoxLinuxAdditions.run
