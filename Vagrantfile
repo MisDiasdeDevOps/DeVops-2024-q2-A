@@ -52,7 +52,9 @@ Vagrant.configure("2") do |config|
       sudo update-initramfs -u
 
       # Reiniciar para aplicar los cambios
-      sudo reboot
+      echo vagrant | sudo -S reboot
+      sleep 60
+      echo vagrant | sudo -S reboot
     SHELL
   end
 end
