@@ -26,15 +26,15 @@ Vagrant.configure("2") do |config|
       # Instalar paquetes necesarios para las Guest Additions
       sudo apt-get install -y build-essential dkms linux-headers-$(uname -r)
 
+      # Descargar la versión específica de VirtualBox Guest Additions 6.0
+      wget https://download.virtualbox.org/virtualbox/6.0.0/VBoxGuestAdditions_6.0.0.iso -O /tmp/VBoxGuestAdditions.iso
+
       # Montar el ISO de las Guest Additions
       sudo mkdir -p /mnt/vbox
-      sudo mount -o loop "/mnt/d/Calilegua_MisProyectos/devops-2024-q2-a/practico-01/VBoxGuestAdditions.iso" /mnt/vbox
+      sudo mount -o loop /tmp/VBoxGuestAdditions.iso /mnt/vbox
 
-      # Descomprimir las Guest Additions (usando gzip en lugar de zstd)
-      sudo tar xzf /mnt/vbox/VBoxLinuxAdditions.run --no-same-owner -C /tmp
-
-      # Instalar las Guest Additions
-      sudo sh /tmp/VBoxLinuxAdditions.run
+      # Descomprimir las Guest Additions
+      sudo sh /mnt/vbox/VBoxLinuxAdditions.run
 
       # Recargar módulos y servicios de VirtualBox Guest Additions
       sudo /sbin/rcvboxadd reload
@@ -55,4 +55,3 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 end
-
