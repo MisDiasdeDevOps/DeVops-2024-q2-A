@@ -25,18 +25,28 @@ Vagrant.configure("2") do |config|
     sudo mkdir -p /mnt/vbox
     sudo mount -o loop /tmp/VBoxGuestAdditions.iso /mnt/vbox
 
+    # Descomprimir las Guest Additions (usando gzip en lugar de zstd)
+    sudo tar xzf /mnt/vbox/VBoxLinuxAdditions.run --no-same-owner -C /tmp
+
     # Instalar las Guest Additions
-    sudo sh /mnt/vbox/VBoxLinuxAdditions.run
+    sudo sh /tmp/VBoxLinuxAdditions.run
+
+    # Recargar módulos y servicios de VirtualBox Guest Additions
+    sudo /sbin/rcvboxadd reload
 
     # Desmontar el ISO
     sudo umount /mnt/vbox
     sudo rmdir /mnt/vbox
 
-    # Instalar Postfix sin interacción
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y postfix
-
     # Limpieza de paquetes
     sudo apt-get autoremove -y
     sudo apt-get clean
+
+    # Actualizar el initramfs
+    sudo update-initramfs -u
+
+    # Reiniciar para aplicar los cambios
+    sudo reboot
   SHELL
 end
+
