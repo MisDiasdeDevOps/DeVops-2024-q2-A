@@ -4,19 +4,15 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "20000"  # Cambiar la memoria asignada a 20GB
 
-    # Agregar un controlador IDE
-    vb.customize ['storagectl', :id,
-                  '--name', 'IDE Controller',
-                  '--add', 'ide']
-
-    # Agregar el CDROM al controlador IDE
+    # Agregar el CDROM al controlador IDE existente
     vb.customize ['storageattach', :id,
                   '--storagectl', 'IDE Controller',
                   '--port', 1,
                   '--device', 0,
                   '--type', 'dvddrive',
-                  '--medium', '/path/to/VBoxGuestAdditions.iso']
+                  '--medium', '/D:\Calilegua_MisProyectos\devops-2024-q2-a\practico-01/VBoxGuestAdditions.iso']
   end
 end
+
 
 
