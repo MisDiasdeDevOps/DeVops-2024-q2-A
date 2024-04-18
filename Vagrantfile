@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
                   '--port', 1,
                   '--device', 0,
                   '--type', 'dvddrive',
-                  '--medium', '/D:\Calilegua_MisProyectos\devops-2024-q2-a\practico-01/VBoxGuestAdditions.iso']
+                  '--medium', '/D:/Calilegua_MisProyectos/devops-2024-q2-a/practico-01/VBoxGuestAdditions.iso']
   end
 end
 
