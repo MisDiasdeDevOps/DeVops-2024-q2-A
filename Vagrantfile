@@ -18,3 +18,4 @@ Vagrant.configure("2") do |config|
     vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
   end
 end
+
