@@ -6,8 +6,10 @@ Vagrant.configure("2") do |config|
     vb.name = "VM-Arroyito"  # Nombre de la máquina virtual en VirtualBox
     vb.memory = "20000"  # Cambiar la memoria asignada a 20GB
 
-    # Configurar un controlador SATA en lugar de IDE
-    vb.customize ['storagectl', :id, '--name', 'SATA Controller', '--add', 'sata', '--controller', 'IntelAHCI']
+    # Verificar si el controlador SATA ya existe
+    if !vb.customizations['storagectl'].any? { |args| args.include?('--name') && args.include?('SATA Controller') }
+      vb.customize ['storagectl', :id, '--name', 'SATA Controller', '--add', 'sata', '--controller', 'IntelAHCI']
+    end
     
     # Adjuntar el CDROM al controlador SATA
     vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'D:\Calilegua_MisProyectos\devops-2024-q2-a\practico-01\VBoxGuestAdditions.iso']
