@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     end
     
     # Adjuntar el CDROM al controlador SATA
-    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'D:\Calilegua_MisProyectos\devops-2024-q2-a\practico-01\VBoxGuestAdditions.iso']
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', '1', '--device', '0', '--type', 'dvddrive', '--medium', 'D:\\Calilegua_MisProyectos\\devops-2024-q2-a\\practico-01\\VBoxGuestAdditions.iso']
     
     # Habilitar el soporte de bidireccionalidad para copiar/pegar
     vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
