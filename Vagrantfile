@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/buster64"
   config.vm.hostname = "VM-Arroyito"
-  config.vm.boot_timeout = 120 # Aumenta el tiempo de espera de arranque a 120 segundos
+  config.vm.boot_timeout = 120
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "VM-Arroyito"
@@ -18,5 +18,14 @@ Vagrant.configure("2") do |config|
 
     vb.customize ["modifyvm", "VM-Arroyito", "--clipboard", "bidirectional"]
   end
+
+  # Provisionador de shell para eliminar la VM existente
+  config.vm.provision "shell", inline: <<-SHELL
+    if VBoxManage list vms | grep -q "VM-Arroyito"; then
+      echo "Se encontró una VM existente con el nombre 'VM-Arroyito'. Deteniendo y eliminando..."
+      VBoxManage controlvm "VM-Arroyito" poweroff
+      VBoxManage unregistervm "VM-Arroyito" --delete
+    fi
+  SHELL
 end
 
