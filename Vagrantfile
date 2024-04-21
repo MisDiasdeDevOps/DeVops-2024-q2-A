@@ -4,8 +4,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "VM-Arroyito"
-    vb.memory = 20000
-
+    
     unless vb.customizations["storagectl"].any? { |args| args.include?("--name") && args.include?("SATA Controller") }
       vb.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI"]
     end
