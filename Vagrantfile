@@ -1,31 +1,33 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "debian/buster64"
-  config.vm.hostname = "VM-Arroyito"
-  config.vm.boot_timeout = 120
-
+  config.vm.box = "debian/bookworm64"
+  
+  # Configuración específica del proveedor para VirtualBox
   config.vm.provider "virtualbox" do |vb|
+    # Mostrar la GUI de VirtualBox al arrancar la máquina
+    vb.gui = true
+    
+    # Personalizar la cantidad de memoria en la VM: 20 GB
+    vb.memory = "20000"
+    
+    # Configurar el número de CPUs a 8
+    vb.cpus = 8
+    
+    # Agregar 64 MB de VRAM
+    vb.customize ["modifyvm", :id, "--vram", "64"]
+    
+    # Establecer el nombre de la VM
     vb.name = "VM-Arroyito"
-    vb.memory = 20000
-
-    # Intenta eliminar el controlador SATA existente
-    vb.customize ["storagectl", "VM-Arroyito", "--name", "SATA Controller", "--remove"]
-
-    # Agrega el controlador SATA
-    vb.customize ["storagectl", "VM-Arroyito", "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI"] do |result|
-      # Si el controlador se agregó correctamente, adjunta la unidad de DVD
-      vb.customize ["storageattach", "VM-Arroyito", "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "dvddrive", "--medium", "D:\\Calilegua_MisProyectos\\devops-2024-q2-a\\practico-01\\VBoxGuestAdditions.iso"]
-    end
-
-    vb.customize ["modifyvm", "VM-Arroyito", "--clipboard", "bidirectional"]
   end
-
-  # Provisionador de shell para eliminar la VM existente
-  config.vm.provision "shell", inline: <<-SHELL
-    if VBoxManage list vms | grep -q "VM-Arroyito"; then
-      echo "Se encontró una VM existente con el nombre 'VM-Arroyito'. Deteniendo y eliminando..."
-      VBoxManage controlvm "VM-Arroyito" poweroff
-      VBoxManage unregistervm "VM-Arroyito" --delete
-    fi
-  SHELL
+  
+  # Crear un mapeo de puerto reenviado que permite acceder a un puerto específico
+  config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  
+  # Crear una red privada, que permite el acceso solo desde el host a la máquina
+  config.vm.network "private_network", ip: "192.168.33.10"
+  
+  # Deshabilitar el directorio compartido predeterminado del directorio de código actual
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  
+  # Establecer el nombre de la VM como "vm-Arroyito"
+  config.vm.define "vm-Arroyito"
 end
-
